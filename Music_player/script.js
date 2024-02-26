@@ -10,6 +10,8 @@ const image = document.getElementById('cover'),
     playBtn = document.getElementById('play'),
     background = document.getElementById('bg-img');
 
+
+
 const music = new Audio();
 
 const songs =  [
@@ -98,6 +100,22 @@ function setProgressBar(e) {
     music.currentTime = (clickX / width) * music.duration;
 }
 
+var range = document.querySelector('.range');
+var rangeNumbers = document.querySelector('.range-numbers');
+var rangeNumbersB = document.querySelector('.range-numbers b');
+range.oninput = function() {
+    rangeNumbersB.innerHTML = range.value + '%';
+    music.volume = (range.value / 100);
+    rangeNumbers.classList.add('show');
+
+}
+range.onkeyup = function() {
+    rangeNumbers.classList.remove('show');
+}
+range.onmouseout = function() {
+    rangeNumbers.classList.remove('show');
+}
+
 playBtn.addEventListener('click', togglePlay);
 prevBtn.addEventListener('click', () => changeMusic(-1));
 nextBtn.addEventListener('click', () => changeMusic(1));
@@ -105,4 +123,6 @@ music.addEventListener('ended', () => changeMusic(1));
 music.addEventListener('timeupdate', updateProgressBar);
 playerProgress.addEventListener('click', setProgressBar);
 
+range.value = 50;
+music.volume = (range.value / 100);
 loadMusic(songs[musicIndex]);
